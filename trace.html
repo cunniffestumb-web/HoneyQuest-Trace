@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>蜜寻纪 · 产品溯源 | HoneyQuest Traceability</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C8963E;
+  --gold-light:#E8C97A;
+  --gold-dark:#A67B2E;
+  --cream:#F5F0E8;
+  --beige:#E8DCC8;
+  --green:#7BA05B;
+  --brown:#3D2B1F;
+  --brown-light:#6B4F3A;
+  --white:#FFFCF7;
+}
+body{
+  font-family: 'Times New Roman', Times, 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', '宋体', serif;
+  background:var(--cream);
+  color:var(--brown);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== Header ===== */
+.header{
+  background:linear-gradient(135deg,#3D2B1F 0%,#5A3F2A 100%);
+  padding:24px 16px 20px;
+  text-align:center;
+}
+.header-bar{height:4px;background:linear-gradient(90deg,#A67B2E,#E8C97A,#C8963E,#E8C97A,#A67B2E)}
+.header .logo-img{
+  width:60px;height:60px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:8px;
+  border:2px solid var(--gold);
+}
+.header .brand{
+  color:#FFFCF7;
+  font-size:24px;
+  letter-spacing:2px;
+}
+.header .brand .gold{color:#E8C97A}
+.header h1{
+  color:#E8C97A;
+  font-size:16px;
+  font-weight:normal;
+  letter-spacing:4px;
+  margin-top:2px;
+}
+.header .sub{
+  color:rgba(255,252,247,0.5);
+  font-size:11px;
+  letter-spacing:3px;
+  font-style:italic;
+  margin-top:2px;
+}
+
+/* ===== Container ===== */
+.wrap{max-width:600px;margin:0 auto;padding:16px 12px 32px}
+
+/* ===== Product Selector ===== */
+.prod-sel{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
+.prod-sel a{
+  padding:5px 12px;
+  border:1px solid var(--gold);
+  border-radius:16px;
+  color:var(--brown);
+  text-decoration:none;
+  font-size:12px;
+  background:var(--white);
+  transition:.2s;
+}
+.prod-sel a.act,.prod-sel a:hover{background:var(--gold);color:#fff;border-color:var(--gold)}
+
+/* ===== Card ===== */
+.card{
+  background:var(--white);
+  border-radius:10px;
+  margin-bottom:12px;
+  overflow:hidden;
+  border:1px solid rgba(200,150,62,.12);
+  box-shadow:0 2px 12px rgba(61,43,31,.06);
+}
+.card-hd{
+  padding:12px 16px;
+  border-bottom:1px solid var(--beige);
+  font-size:15px;
+  color:var(--brown);
+  letter-spacing:2px;
+  display:flex;align-items:center;gap:8px;
+}
+.card-hd::before{
+  content:'◆';
+  color:var(--gold);
+  font-size:10px;
+}
+.card-bd{padding:14px 16px}
+
+/* ===== Hero ===== */
+.hero{text-align:center;padding:20px 16px 16px}
+.hero .icon{font-size:40px;margin-bottom:6px}
+.hero .cn{font-size:24px;color:var(--brown);letter-spacing:6px}
+.hero .en{font-size:14px;color:var(--brown-light);font-style:italic;letter-spacing:1px;margin-top:2px}
+.hero .tag{
+  font-size:12px;
+  color:var(--gold-dark);
+  letter-spacing:3px;
+  margin-top:6px;
+  padding:4px 14px;
+  border:1px solid var(--gold-light);
+  border-radius:4px;
+  display:inline-block;
+}
+
+/* ===== Info Grid ===== */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g2 .item{
+  padding:10px;
+  background:var(--cream);
+  border-radius:6px;
+}
+.g2 .item.fw{grid-column:1/-1}
+.g2 .item .lbl{font-size:10px;color:var(--brown-light);letter-spacing:1px;text-transform:uppercase}
+.g2 .item .val{font-size:14px;color:var(--brown);margin-top:2px;font-weight:bold}
+.batch{
+  font-family:'Courier New',monospace;
+  font-size:13px;
+  padding:3px 10px;
+  border:1px dashed var(--gold);
+  border-radius:3px;
+  background:var(--cream);
+  display:inline-block;
+}
+
+/* ===== Origin ===== */
+.origin{text-align:center;padding:6px 0}
+.origin .ico{font-size:36px;margin-bottom:4px}
+.origin .place{font-size:17px;font-weight:bold;letter-spacing:2px}
+.origin .place-en{font-size:12px;color:var(--brown-light);font-style:italic;margin-top:1px}
+.origin .coord{font-size:13px;color:var(--gold-dark);letter-spacing:1px;margin-top:4px}
+.origin .desc{
+  font-size:12px;color:var(--brown-light);margin-top:4px;
+  background:var(--cream);padding:8px 12px;border-radius:6px;
+}
+
+/* ===== Test Data ===== */
+.t2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.t2 .item{text-align:center;padding:12px 6px;border:1px solid var(--beige);border-radius:6px}
+.t2 .item .num{font-size:20px;font-weight:bold;color:var(--gold-dark)}
+.t2 .item .lb{font-size:10px;color:var(--brown-light);margin-top:3px;letter-spacing:1px}
+.t2 .item .nt{font-size:9px;color:var(--green);margin-top:1px}
+.test-foot{
+  margin-top:10px;padding:8px;background:var(--cream);border-radius:6px;
+  font-size:11px;color:var(--brown-light);text-align:center;
+}
+
+/* ===== Timeline ===== */
+.tl{position:relative;padding:6px 0}
+.tl::before{
+  content:'';position:absolute;left:18px;top:4px;bottom:4px;
+  width:2px;background:linear-gradient(to bottom,var(--gold),var(--green),var(--gold));
+}
+.tl .it{position:relative;padding-left:44px;margin-bottom:16px}
+.tl .it:last-child{margin-bottom:0}
+.tl .it .dot{
+  position:absolute;left:12px;top:2px;
+  width:14px;height:14px;
+  background:var(--gold);
+  border-radius:50%;
+  border:3px solid var(--white);
+  box-shadow:0 0 0 2px var(--gold);
+}
+.tl .it:nth-child(2n) .dot{background:var(--green);box-shadow:0 0 0 2px var(--green)}
+.tl .it .tt{font-size:14px;font-weight:bold;color:var(--brown)}
+.tl .it .td{font-size:12px;color:var(--brown-light);margin-top:1px}
+
+/* ===== Certs ===== */
+.certs{display:flex;flex-wrap:wrap;gap:6px}
+.certs span{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:5px 10px;border:1px solid var(--gold-light);
+  border-radius:14px;font-size:11px;color:var(--brown);background:var(--cream);
+}
+.certs span::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%}
+
+/* ===== Producer ===== */
+.prod-info{text-align:center}
+.prod-info .l{font-size:11px;color:var(--brown-light);letter-spacing:2px}
+.prod-info .n{font-size:14px;color:var(--brown);margin-top:3px;letter-spacing:1px}
+.prod-info .e{font-size:11px;color:var(--brown-light);font-style:italic}
+.prod-info .s{font-size:10px;color:var(--brown-light);margin-top:4px}
+
+/* ===== Slogan ===== */
+.slogan{
+  text-align:center;padding:20px 16px;
+  background:linear-gradient(135deg,#3D2B1F 0%,#5A3F2A 100%);
+  border-radius:10px;margin-top:12px;
+}
+.slogan p{color:var(--gold-light);font-size:14px;font-style:italic;letter-spacing:2px}
+.slogan .cn{color:rgba(255,252,247,.5);font-size:12px;margin-top:3px;letter-spacing:3px}
+
+/* ===== Footer ===== */
+.foot{text-align:center;padding:16px;font-size:10px;color:var(--brown-light);letter-spacing:1px}
+.foot .cp{font-size:12px;margin-bottom:3px;color:var(--brown)}
+.foot .sep{margin-top:6px;padding-top:6px;border-top:1px solid var(--beige)}
+
+/* ===== Anim ===== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeUp .5s ease-out both}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <img src="logo.png" alt="HoneyQuest" class="logo-img" id="logoImg" onerror="this.style.display='none'">
+  <div class="brand"><span class="gold">蜜寻纪</span> · HoneyQuest<sup>®</sup></div>
+  <h1>产品溯源信息</h1>
+  <div class="sub">PRODUCT TRACEABILITY</div>
+</div>
+<div class="header-bar"></div>
+
+<div class="wrap" id="app"></div>
+
+<script>
+// ========== Product Data ==========
+const PRODUCTS = {
+  linden: {
+    id: 'linden',
+    icon: '🌲',
+    cn: '椴树蜜', en: 'Pure Linden Honey',
+    batch: 'LT-20260513-001',
+    originCN: '吉林 · 长白山',
+    originEN: 'Jilin · Changbai Mountains',
+    coord: '北纬 42°N · 海拔 800m+ 原始椴树林',
+    desc: '长白山国家级自然保护区，森林覆盖率85%，远离工业污染，野生椴树花蜜源纯净芬芳',
+    tests: [
+      {num:'< 0.1', lb:'蔗糖含量 (g/100g)', nt:'✓ 远低国标≤5 / 欧盟≤4'},
+      {num:'≥ 14', lb:'活性酶值 (mL/g)', nt:'✓ 超国标8 / 欧盟10'},
+      {num:'≥ 42°', lb:'波美度 Baume', nt:'✓ 一级品标准'},
+      {num:'HPLC', lb:'高效液相色谱', nt:'✓ 每批检测'},
+    ],
+    testFoot: '🔬 HPLC · 花粉纯度分析 · 同位素真实性检测',
+    timeline: [
+      {tt:'🐝 蜂群养殖 Bee Sources', td:'长白山中华蜜蜂种群 · 传统自然放养'},
+      {tt:'📡 智能蜂箱 Smart Hives', td:'物联网实时监控蜂箱温湿度 · 花期追踪'},
+      {tt:'🌼 成熟采收 Mature Harvest', td:'自然封盖成熟蜜 · 不浓缩 · 不添加'},
+      {tt:'🔬 实验室检测 Lab Testing', td:'HPLC + 花粉 + 农残 全项检测'},
+      {tt:'📦 无菌灌装 Bottling', td:'GMP洁净车间 · 食品级玻璃瓶灌装'},
+    ],
+  },
+  acacia: {
+    id: 'acacia',
+    icon: '🌸',
+    cn: '槐花蜜', en: 'Pure Acacia Honey',
+    batch: 'AC-20260513-001',
+    originCN: '河南 · 三门峡',
+    originEN: 'Henan · Sanmenxia',
+    coord: '北纬 34°N · 黄河沿岸槐花林区',
+    desc: '三门峡黄土高原丘陵地带，昼夜温差大，洋槐花蜜色泽水白、香气清雅、不易结晶',
+    tests: [
+      {num:'< 0.1', lb:'蔗糖含量 (g/100g)', nt:'✓ 远低国标≤5 / 欧盟≤4'},
+      {num:'≥ 10', lb:'活性酶值 (mL/g)', nt:'✓ 达欧盟标准10'},
+      {num:'≥ 42°', lb:'波美度 Baume', nt:'✓ 一级品标准'},
+      {num:'HPLC', lb:'高效液相色谱', nt:'✓ 每批检测'},
+    ],
+    testFoot: '🔬 HPLC · 花粉纯度分析 · 真实性检测',
+    timeline: [
+      {tt:'🐝 蜂群养殖 Bee Sources', td:'三门峡优质蜂种 · 洋槐花期追花放养'},
+      {tt:'📡 智能蜂箱 Smart Hives', td:'物联网实时监控 · 花期与流蜜量追踪'},
+      {tt:'🌼 成熟采收 Mature Harvest', td:'自然封盖成熟蜜 · 不浓缩 · 不添加'},
+      {tt:'🔬 实验室检测 Lab Testing', td:'HPLC + 花粉 + 农残 全项检测'},
+      {tt:'📦 无菌灌装 Bottling', td:'GMP洁净车间 · 食品级玻璃瓶灌装'},
+    ],
+  },
+  blueberry: {
+    id: 'blueberry',
+    icon: '🫐',
+    cn: '蓝莓蜜', en: 'Pure Blueberry Honey',
+    batch: 'BB-20260513-001',
+    originCN: '大连 · 庄河',
+    originEN: 'Dalian · Zhuanghe',
+    coord: '北纬 39°N · 蓝莓种植核心产区',
+    desc: '庄河市桂云花乡，蓝莓种植之乡，浆果花蜜富集天然花青素，蜜色呈琥珀光泽',
+    tests: [
+      {num:'< 0.1', lb:'蔗糖含量 (g/100g)', nt:'✓ 远低国标≤5 / 欧盟≤4'},
+      {num:'≥ 10', lb:'活性酶值 (mL/g)', nt:'✓ 达欧盟标准10'},
+      {num:'≥ 42°', lb:'波美度 Baume', nt:'✓ 一级品标准'},
+      {num:'花青素', lb:'天然抗氧化物', nt:'✓ 蓝莓花蜜富集'},
+    ],
+    testFoot: '🔬 HPLC · 花粉纯度分析 · 花青素含量检测',
+    timeline: [
+      {tt:'🐝 蜂群养殖 Bee Sources', td:'庄河本地蜂种 · 蓝莓花期专项放蜂'},
+      {tt:'📡 智能蜂箱 Smart Hives', td:'桂云花乡智能蜂场 · 花流蜜期实时监测'},
+      {tt:'🌼 成熟采收 Mature Harvest', td:'自然封盖成熟蜜 · 不浓缩 · 不添加'},
+      {tt:'🔬 实验室检测 Lab Testing', td:'HPLC + 花粉 + 花青素全项检测'},
+      {tt:'📦 无菌灌装 Bottling', td:'GMP洁净车间 · 食品级玻璃瓶灌装'},
+    ],
+  },
+  motherwort: {
+    id: 'motherwort',
+    icon: '🌺',
+    cn: '益母草蜜', en: 'Pure Motherwort Honey',
+    batch: 'MW-20260513-001',
+    originCN: '四川 · 自贡',
+    originEN: 'Sichuan · Zigong',
+    coord: '北纬 29°N · 川南丘陵益母草种植区',
+    desc: '川南丘陵地带，气候温润，益母草花蜜富含生物碱与黄酮类物质，专为女性健康滋养',
+    tests: [
+      {num:'< 0.1', lb:'蔗糖含量 (g/100g)', nt:'✓ 远低国标≤5 / 欧盟≤4'},
+      {num:'≥ 10', lb:'活性酶值 (mL/g)', nt:'✓ 达欧盟标准10'},
+      {num:'≥ 42°', lb:'波美度 Baume', nt:'✓ 一级品标准'},
+      {num:'黄酮类', lb:'植物活性成分', nt:'✓ 益母草特征物'},
+    ],
+    testFoot: '🔬 HPLC · 花粉纯度分析 · 黄酮类化合物检测',
+    timeline: [
+      {tt:'🐝 蜂群养殖 Bee Sources', td:'川南优质蜂种 · 益母草花期专项放蜂'},
+      {tt:'📡 智能蜂箱 Smart Hives', td:'物联网实时监控蜂箱 · 花期与流蜜追踪'},
+      {tt:'🌼 成熟采收 Mature Harvest', td:'自然封盖成熟蜜 · 不浓缩 · 不添加'},
+      {tt:'🔬 实验室检测 Lab Testing', td:'HPLC + 花粉 + 黄酮类化合物检测'},
+      {tt:'📦 无菌灌装 Bottling', td:'GMP洁净车间 · 食品级玻璃瓶灌装'},
+    ],
+  },
+};
+
+const CERTS = ['ISO 22000 食品安全体系','欧盟有机认证 EU Organic','EU Compliant','HPLC 检测报告','零蔗糖认证','出口 10+ 国家'];
+
+// ========== Render ==========
+const params = new URLSearchParams(window.location.search);
+const pid = params.get('p') || 'linden';
+const p = PRODUCTS[pid];
+
+if (!p) {
+  document.getElementById('app').innerHTML = '<div style="text-align:center;padding:40px;color:var(--brown-light)">产品不存在 / Product not found</div>';
+} else {
+  const app = document.getElementById('app');
+  const anim = (i) => `anim`; // all get same class for staggered animation via nth-child
+
+  let html = '';
+
+  // Product Selector
+  html += `<div class="prod-sel">`;
+  for (const [k, v] of Object.entries(PRODUCTS)) {
+    const act = k === pid ? ' act' : '';
+    html += `<a href="?p=${k}" class="${act}">${v.cn}</a>`;
+  }
+  html += `</div>`;
+
+  // Hero
+  html += `<div class="card anim"><div class="hero">
+    <div class="icon">${p.icon}</div>
+    <div class="cn">${p.cn}</div>
+    <div class="en">${p.en}</div>
+    <div class="tag">0 蔗糖 · 纯天然 · 零添加</div>
+  </div></div>`;
+
+  // Product Info
+  html += `<div class="card anim"><div class="card-hd">产品信息 / Product Info</div><div class="card-bd">
+    <div class="g2">
+      <div class="item"><div class="lbl">品牌 Brand</div><div class="val">蜜寻纪 HoneyQuest<sup>®</sup></div></div>
+      <div class="item"><div class="lbl">净含量 Net Wt.</div><div class="val">500ml / 500g</div></div>
+      <div class="item"><div class="lbl">保质期 Shelf Life</div><div class="val">24 个月 / Months</div></div>
+      <div class="item"><div class="lbl">波美度 Baume</div><div class="val">≥ 42°</div></div>
+      <div class="item fw"><div class="lbl">批次号 Batch No.</div><div class="val"><span class="batch">${p.batch}</span></div></div>
+    </div>
+  </div></div>`;
+
+  // Origin
+  html += `<div class="card anim"><div class="card-hd">蜜源产地 / Nectar Origin</div><div class="card-bd">
+    <div class="origin">
+      <div class="ico">${p.icon}</div>
+      <div class="place">${p.originCN}</div>
+      <div class="place-en">${p.originEN}</div>
+      <div class="coord">${p.coord}</div>
+      <div class="desc">${p.desc}</div>
+    </div>
+  </div></div>`;
+
+  // Test Data
+  html += `<div class="card anim"><div class="card-hd">检测数据 / Lab Results</div><div class="card-bd">
+    <div class="t2">`;
+  for (const t of p.tests) {
+    html += `<div class="item"><div class="num">${t.num}</div><div class="lb">${t.lb}</div><div class="nt">${t.nt}</div></div>`;
+  }
+  html += `</div><div class="test-foot">${p.testFoot}</div></div></div>`;
+
+  // Timeline
+  html += `<div class="card anim"><div class="card-hd">全链追溯 / Supply Chain</div><div class="card-bd">
+    <div class="tl">`;
+  for (const t of p.timeline) {
+    html += `<div class="it"><div class="dot"></div><div class="tt">${t.tt}</div><div class="td">${t.td}</div></div>`;
+  }
+  html += `</div></div></div>`;
+
+  // Certs
+  html += `<div class="card anim"><div class="card-hd">认证资质 / Certifications</div><div class="card-bd">
+    <div class="certs">`;
+  for (const c of CERTS) {
+    html += `<span>${c}</span>`;
+  }
+  html += `</div></div></div>`;
+
+  // Producer
+  html += `<div class="card anim"><div class="card-bd prod-info">
+    <div class="l">生产商 / Producer</div>
+    <div class="n">庄河市城山镇恒利村股份经济合作社</div>
+    <div class="e">Hengli Village Cooperative, Zhuanghe, Dalian</div>
+    <div class="s">生产基地：大连庄河 · 桂云花乡蜂场 · 北纬37°N</div>
+  </div></div>`;
+
+  // Slogan
+  html += `<div class="slogan anim">
+    <p>Chase Flowers Through Seasons, Gather Pure Natural Sweetness</p>
+    <div class="cn">逐花四季，凝聚每一滴自然甜</div>
+  </div>`;
+
+  // Footer
+  html += `<div class="foot">
+    <div class="cp">蜜寻纪 HoneyQuest<sup>®</sup></div>
+    <div>庄河市城山镇恒利村股份经济合作社</div>
+    <div style="margin-top:2px;">www.honeyquest.com</div>
+    <div class="sep">[ 区块链溯源 · Blockchain Traceability ]<br>SN/T 5652.9-2024 蜂产品追溯标准 · ISO 22000 Certified</div>
+  </div>`;
+
+  app.innerHTML = html;
+
+  // Dynamic logo
+  const logoImg = document.getElementById('logoImg');
+  // Try multiple logo candidates
+  const logos = ['logo.png', 'image56.png', 'image90.png', 'image59.png'];
+  let tried = 0;
+  function tryLogo() {
+    if (tried >= logos.length) { logoImg.style.display = 'none'; return; }
+    logoImg.src = logos[tried];
+    logoImg.onerror = () => { tried++; tryLogo(); };
+  }
+  tryLogo();
+}
+</script>
+</body>
+</html>
